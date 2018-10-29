@@ -237,19 +237,19 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Demo\FindWay.cs" />
-    <Compile Include="Assets\Demo\FloorItem.cs" />
-    <Compile Include="Assets\Demo\Line.cs" />
-    <Compile Include="Assets\Demo\Map.cs" />
-    <Compile Include="Assets\Demo\Master.cs" />
-    <Compile Include="Assets\Script\Debug\Debugger.cs" />
-    <Compile Include="Assets\Script\Events\EventsManager.cs" />
-    <Compile Include="Assets\Script\Events\PropertyManager.cs" />
-    <Compile Include="Assets\Script\MainState.cs" />
-    <Compile Include="Assets\Script\MonsterData.cs" />
-    <Compile Include="Assets\Script\PlayerData.cs" />
-    <Compile Include="Assets\Script\TestEvent.cs" />
-    <Compile Include="Assets\Script\TestGetEvent.cs" />
+    <Compile Include="Assets\A_FindWay\FindWay.cs" />
+    <Compile Include="Assets\A_FindWay\FloorItem.cs" />
+    <Compile Include="Assets\A_FindWay\Line.cs" />
+    <Compile Include="Assets\A_FindWay\Map.cs" />
+    <Compile Include="Assets\A_FindWay\Master.cs" />
+    <Compile Include="Assets\Event_Script\Debug\Debugger.cs" />
+    <Compile Include="Assets\Event_Script\Events\EventsManager.cs" />
+    <Compile Include="Assets\Event_Script\Events\PropertyManager.cs" />
+    <Compile Include="Assets\Event_Script\MainState.cs" />
+    <Compile Include="Assets\Event_Script\MonsterData.cs" />
+    <Compile Include="Assets\Event_Script\PlayerData.cs" />
+    <Compile Include="Assets\Event_Script\TestEvent.cs" />
+    <Compile Include="Assets\Event_Script\TestGetEvent.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
