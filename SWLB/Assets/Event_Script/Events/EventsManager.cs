@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Reflection;
 
+//算是观察这种的监听接口
 public interface ISubscriber
 {
     System.Action<object[]> Handler
@@ -10,10 +11,11 @@ public interface ISubscriber
         set;
     }
 
-    void UnSubscribe();
+    void UnSubscribe(); 
 
 }
 
+//客户端用到的事件名最好都记录下来
 public static class EventNames
 {
     public const string Gui_test1 = "gui:test1";
@@ -22,19 +24,20 @@ public static class EventNames
 
 
 
-
 public static class EventsManager
 {
+    //所有正在监听的事件列表
     static Dictionary<string, List<Subscriber>> ms_subscribers = new Dictionary<string, List<Subscriber>>();
 
-    [System.AttributeUsage(System.AttributeTargets.Property | System.AttributeTargets.Field)]
+    //[System.AttributeUsage(System.AttributeTargets.Property | System.AttributeTargets.Field)]
 
-    //??????
-    public class ObserveAttribute : System.Attribute  
-    {
+    ////??????
+    //public class ObserveAttribute : System.Attribute  
+    //{
 
-    }
+    //}
 
+    //抽象监听主体
     private class Subscriber : ISubscriber
     {
         string m_subscribeKey;
@@ -68,6 +71,7 @@ public static class EventsManager
 
     }
 
+    //注册监听对象
     public static ISubscriber Subscribe(string name)
     {
         List<Subscriber> sublist = null;
@@ -82,6 +86,7 @@ public static class EventsManager
         return sub;
     }
 
+    //监听对象分发实现方法
     public static void Notify(string name, params object[] args)
     {
         List<Subscriber> sublist = null;
@@ -95,12 +100,11 @@ public static class EventsManager
         {
             if (!sublist.Contains(sub))
                 continue;
-
             sub.Notify(args);
         }
     }
 
-    //观察者
+    //分发主体   
     public abstract class Publisher
     {
         public abstract string Name
@@ -113,71 +117,4 @@ public static class EventsManager
             EventsManager.Notify(Name + ":" + name, args);
         }
     }
-
-    public abstract class Observer : Publisher
-    {
-        System.Object m_obj;
-        List<FieldInfo> m_observeFields = new List<FieldInfo>();
-        List<PropertyInfo> m_observeProperties = new List<PropertyInfo>();
-        List<object> m_fieldValues = new List<object>();
-        List<object> m_propertyValues = new List<object>();
-
-        public Observer(System.Object obj)
-        {
-            m_obj = obj;
-            var fields = m_obj.GetType().GetFields();
-
-            foreach(var f in fields)
-            {
-                object[] attributes = f.GetCustomAttributes(typeof(ObserveAttribute), false);
-                if(attributes.Length > 0)
-                {
-                    m_observeFields.Add(f);
-                    m_fieldValues.Add(f.GetValue(m_obj));
-                }
-            }
-
-            var properties = m_obj.GetType().GetProperties();
-            foreach(var p in properties)
-            {
-                if (!p.CanRead)
-                    continue;
-
-                object[] attributes = p.GetCustomAttributes(typeof(ObserveAttribute), false);
-                if(attributes.Length > 0)
-                {
-                    m_observeProperties.Add(p);
-                    m_propertyValues.Add(p.GetValue(m_obj, null));
-                }
-            }
-        }
-
-        public void Update()
-        {
-            for(int i = 0; i < m_observeFields.Count; i++)
-            {
-                var m = m_observeFields[i];
-                object newValue = m.GetValue(m_obj);
-                if(!object.Equals(newValue, m_fieldValues[i]))
-                {
-                    Notify("valueChanged", m_obj, m.Name);
-                    m_fieldValues[i] = newValue;
-                }
-            }
-
-            for(int i = 0; i < m_observeProperties.Count; i++)
-            {
-                var p = m_observeProperties[i];
-                object newValue = p.GetValue(m_obj, null);
-                if (!object.Equals(newValue, m_propertyValues[i]))
-                {
-                    Notify("valueChanged", m_obj, p.Name);
-                    m_propertyValues[i] = newValue;
-                }
-            }
-        }
-    }
-
-
-
 }

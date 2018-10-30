@@ -13,7 +13,11 @@ public class TestGetEvent : MonoBehaviour {
 
     void Hell(object[] args)
     {
-        Debug.Log("Hello world!!!");
+        foreach(var item in args)
+        {
+            Debug.Log("hello world = " + item);
+        }
+        //Debug.Log("Hello world!!!");
     }
     // Use this for initialization
     void Start () {

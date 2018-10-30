@@ -249,7 +249,9 @@
     <Compile Include="Assets\Event_Script\MonsterData.cs" />
     <Compile Include="Assets\Event_Script\PlayerData.cs" />
     <Compile Include="Assets\Event_Script\TestEvent.cs" />
+    <Compile Include="Assets\Event_Script\TestEvent1.cs" />
     <Compile Include="Assets\Event_Script\TestGetEvent.cs" />
+    <Compile Include="Assets\Test_script\AttributeTest.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="GenerateTargetFrameworkMonikerAttribute" />
